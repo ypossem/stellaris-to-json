@@ -3,7 +3,7 @@ Description
 
 **WARNING** This has not been updated since August 2018. Likely doesn't work with the current Stellaris versions. Also, sadly, the git history was lost.
 
-**WARNING EXTRA WARNING!** This JS uses some old utility code of mine ('@sembiance/xuti;') that may have changed over the years and may no longer be compatible with this code. Shouldn't be hard to refactor the code to workaround it.
+**WARNING EXTRA WARNING!** This JS also uses some old utility code of mine ('@sembiance/xuti;') that is no longer available publically I don't think. So you'll have to refactor the code and get rid of that. Shouldn't be too hard.
 
 Converts game data from [Stellaris](https://store.steampowered.com/app/281990/Stellaris/) into JSON format.
 
