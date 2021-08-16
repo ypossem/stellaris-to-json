@@ -1,0 +1,16 @@
+{
+	"name"         : "stellaris-to-json",
+	"version"      : "1.0.0",
+	"author"       : "Robert Schultz <robert@cosmicrealms.com>",
+	"description"  : "Converts Stellaris game data files into JSON files",
+	"dependencies" :
+    {
+		"@sembiance/xbase" : "Sembiance/xbase",
+		"@sembiance/xutil" : "Sembiance/xutil",
+		"tiptoe"           : "~1.2.0",
+		"mkdirp"           : "~0.5.1",
+		"glob"             : "~7.1.2",
+		"cli-progress"     : "~2.0.0",
+		"pegjs"            : "~0.10.0"
+    }
+}

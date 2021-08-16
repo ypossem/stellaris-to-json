@@ -1,0 +1,8 @@
+Other parsers:
+https://gitlab.com/bipedalshark/stellaris-tech-tree/blob/master/script/parse.py
+https://github.com/Chamberlain91/stellaris-tech-parser
+
+Forum posts:
+https://forum.paradoxplaza.com/forum/index.php?threads/stellaris-game-data-converter-to-json.1113738/
+https://www.reddit.com/r/Stellaris/comments/955g2h/stellaris_game_data_to_json_converter/
+https://discordapp.com/channels/378985949373399040/378985949373399042
