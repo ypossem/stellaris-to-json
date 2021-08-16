@@ -1,6 +1,8 @@
 Description
 ===========
 
+**WARNING** This has not been updated since August 2018. Likely doesn't work with the current Stellaris versions. Also, sadly, the git history was lost.
+
 Converts game data from [Stellaris](https://store.steampowered.com/app/281990/Stellaris/) into JSON format.
 
 If you just want the JSON, latest version, english strings, then it's in the "json" directory.
