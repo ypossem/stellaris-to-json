@@ -1,8 +1,8 @@
-"use strict";
+import * as exBase from "@sembiance/xbase"
+import {file as exfileUtil} from "@sembiance/xutil"
 
-const base = require("@sembiance/xbase"),
-	fileUtil = require("@sembiance/xutil").file,
-	path = require("path"),
+const 
+	
 	glob = require("glob"),
 	cliProgress = require("cli-progress"),
 	tiptoe = require("tiptoe"),
@@ -10,7 +10,7 @@ const base = require("@sembiance/xbase"),
 	pegjs = require("pegjs"),
 	fs = require("fs");
 
-if(process.argv.length<3 || !fileUtil.existsSync(process.argv[2]))
+if(process.argv.length<3 || !exfileUtil.existsSync(process.argv[2]))
 	return (console.log("Usage: node %s <path to stellaris/common>", path.basename(process.argv[1])), process.exit(1));
 
 const I18N_DIR_PATH = process.argv.length>=4 ? process.argv[3] : null;
@@ -29,7 +29,7 @@ tiptoe(
 	{
 		console.log("Parsing weapons data...");
 
-		fs.readFile(path.join(COMMON_DIR_PATH, "component_templates", "weapon_components.csv"), base.UTF8, this);
+		fs.readFile(path.join(COMMON_DIR_PATH, "component_templates", "weapon_components.csv"), exBase.UTF8, this);
 	},
 	function processWeaponsData(weaponsDataRaw)
 	{
@@ -64,7 +64,7 @@ tiptoe(
 	{
 		console.log("Parsing global variables...");
 
-		fs.readFile(path.join(COMMON_DIR_PATH, "scripted_variables", "00_scripted_variables.txt"), base.UTF8, this);
+		fs.readFile(path.join(COMMON_DIR_PATH, "scripted_variables", "00_scripted_variables.txt"), exBase.UTF8, this);
 	},
 	function processGlobalVarsData(dataRaw)
 	{
@@ -78,7 +78,7 @@ tiptoe(
 			GLOBAL_VARS[varMatches[1]] = +varMatches[2];
 		});
 
-		fs.readFile(path.join(__dirname, "stellaris.pegjs"), base.UTF8, this.parallel());
+		fs.readFile(path.join(__dirname, "stellaris.pegjs"), exBase.UTF8, this.parallel());
 		glob(path.join(COMMON_DIR_PATH, "**/*.txt"), this.parallel());
 	},
 	function parseTechFiles(stellarisGrammarRaw, dataFilePaths)
@@ -92,7 +92,7 @@ tiptoe(
 
 		dataFilePaths.parallelForEach((v, subcb) => parseTechFile(v, stellarisParser, progressBar, subcb), this, 10);
 	},
-	base.FINISH
+	exBase.FINISH
 );
 
 function parseTechFile(techDataFilePath, stellarisParser, progressBar, cb)
@@ -109,7 +109,7 @@ function parseTechFile(techDataFilePath, stellarisParser, progressBar, cb)
 	tiptoe(
 		function loadTechData()
 		{
-			fs.readFile(techDataFilePath, base.UTF8, this.parallel());
+			fs.readFile(techDataFilePath, exBase.UTF8, this.parallel());
 			mkdirp(outFileDirPath, this.parallel());	// Also create our out directory path if needed
 		},
 		function parseData(techDataRaw)
@@ -189,7 +189,7 @@ function parseTechFile(techDataFilePath, stellarisParser, progressBar, cb)
 
 			enhanceAndModify(techData);
 
-			fs.writeFile(path.join(outFileDirPath, path.basename(techDataFilePath, path.extname(techDataFilePath)) + ".json"), JSON.stringify(techData), base.UTF8, this);
+			fs.writeFile(path.join(outFileDirPath, path.basename(techDataFilePath, path.extname(techDataFilePath)) + ".json"), JSON.stringify(techData), exBase.UTF8, this);
 		},
 		function finish(err)
 		{
@@ -249,7 +249,7 @@ function processI18NFile(i18nFilePath, cb)
 	tiptoe(
 		function loadFile()
 		{
-			fs.readFile(i18nFilePath, base.UTF8, this);
+			fs.readFile(i18nFilePath, exBase.UTF8, this);
 		},
 		function parseFile(i18nDataRaw)
 		{
