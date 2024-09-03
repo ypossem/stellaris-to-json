@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "commander": "^12.1.0",
+    "peggy": "^4.0.3",
     "ts-node": "^10.9.2"
   },
   "scripts": {

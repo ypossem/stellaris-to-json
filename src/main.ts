@@ -25,10 +25,18 @@ if (program.processedArgs.length > 1) {
     exit(1)
 }
 
-const basePath = program.processedArgs[0]
+async function main() {
+  const basePath = program.processedArgs[0]
 
-const WEAPON_DATA = readWeapons(basePath)
-console.log(WEAPON_DATA)
+  const WEAPON_DATA = readWeapons(basePath)
+  console.log(WEAPON_DATA)
+  
+  const GLOBAL_VARS = readGlobalData(basePath)
+  console.debug(GLOBAL_VARS)
+}
 
-const GLOBAL_VARS = readGlobalData(basePath)
-console.debug(GLOBAL_VARS)
+main().then(()=>{
+  // great, nothing else to do
+}).catch((err)=>{
+  console.error(err)
+})
