@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import { readWeapons } from './weapons';
 import { exit } from 'process';
+import { readGlobalData } from './global-data';
 const program = new Command();
 
 program
@@ -28,3 +29,6 @@ const basePath = program.processedArgs[0]
 
 const WEAPON_DATA = readWeapons(basePath)
 console.log(WEAPON_DATA)
+
+const GLOBAL_VARS = readGlobalData(basePath)
+console.debug(GLOBAL_VARS)
