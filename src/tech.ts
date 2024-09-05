@@ -6,7 +6,17 @@ import {mkdir, readFile} from 'node:fs/promises'
 
 const OUT_DIR_PATH = path.join(__dirname, "json");
 
-const readSingleTech = (baseDir: string, stellarisParser: peggy.Parser)=>
+function objectFilterInplace(object: Record<any, any>, callback: (key: any, value: any)) {
+    for (const k in Object.keys(object)) {
+        const v = object[k]
+        const remove = !callback(k,v)
+        if (remove) {
+            delete object[k]
+        }
+    }
+}
+
+const readSingleTech = async (baseDir: string, stellarisParser: peggy.Parser)=>
     async (techDataFilePath: string) => {
     if(
         ["scripted_variables", "random_names"]
@@ -28,9 +38,9 @@ const readSingleTech = (baseDir: string, stellarisParser: peggy.Parser)=>
     const techData = stellarisParser.parse(techDataRaw);
     
     // Extract our our local vars
-    const localVars = {};
+    const localVars:Record<any, any> = {};
     
-    Object.filter(techData, (k, v) =>
+    objectFilterInplace(techData, (k, v) =>
     {
         if(!k.startsWith("@"))
             return true;
@@ -38,6 +48,10 @@ const readSingleTech = (baseDir: string, stellarisParser: peggy.Parser)=>
         localVars[k] = v;
         return false;
     });
+
+    function addStandardI18NData() {
+        // TODO
+    }
 }
 
 export async function readTech(baseDir: string) {
