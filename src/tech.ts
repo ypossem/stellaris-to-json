@@ -132,7 +132,7 @@ const readSingleTech = (
 
     enhanceAndModify(techData);
     const outFileName = path.join(outFileDirPath, path.basename(techDataFilePath, path.extname(techDataFilePath)) + '.json')
-    await writeFile(outFileName, JSON.stringify(techData), 'utf-8');
+    await writeFile(outFileName, JSON.stringify(techData, null, 2), 'utf-8');
   };
 
 export async function readTech(opts: {basePath: string, outBasePath: string}, dataParam: {
