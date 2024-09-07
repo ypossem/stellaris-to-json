@@ -2,18 +2,19 @@ import { Command } from 'commander';
 import { readWeapons } from './weapons';
 import { exit } from 'process';
 import { readGlobalData } from './global-data';
+import { readTech } from './tech';
 const program = new Command();
 
 program
   .name('Stellaris to JSON')
   .description('convert Stellaris data files to json')
   .argument('<stelDir>', 'Location of the base stellaris directory')
-  .option('-i --i18dir <dir>', 'Location of directory containing I18N yaml files');
+  .option('-n --i18dir <dir>', 'Location of directory containing I18N yaml files')
+  .option('-o --output <dir>', 'Output directory of produced files');
 
 program.parse();
 
 const options = program.opts();
-const limit = options.first ? 1 : undefined;
 console.debug(program);
 
 if (program.processedArgs.length < 1) {
@@ -25,6 +26,9 @@ if (program.processedArgs.length > 1) {
   exit(1);
 }
 
+
+const OUT_DIR_PATH = path.join(__dirname, 'json');
+
 async function main() {
   const basePath = program.processedArgs[0];
 
@@ -33,6 +37,12 @@ async function main() {
   
   const GLOBAL_VARS = readGlobalData(basePath);
   console.debug(GLOBAL_VARS);
+  const outBasePath = options.output || OUT_DIR_PATH
+  readTech({basePath, outBasePath}, {
+    GLOBAL_VARS,
+    WEAPON_DATA,
+    I18N_DATA: {}
+  })
 }
 
 main().then(()=>{
