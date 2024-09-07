@@ -43,7 +43,7 @@ const readSingleTech = (
 }
 )=>
   async (techDataFilePath: string) => {
-    const {basePath: baseDir, stellarisParser} = opts
+    const {basePath: baseDir, stellarisParser, outBasePath} = opts
     const {GLOBAL_VARS, I18N_DATA, WEAPON_DATA} = dataParam
     if(
       ['scripted_variables', 'random_names']
@@ -90,7 +90,7 @@ const readSingleTech = (
     // Replace any referenced variables with the actual data and also I18N keys and insert weapon data
     function enhanceAndModify(o: StdObj)
     {
-      if(o.hasOwnProperty('key'))
+      if(Object.hasOwn(o,'key'))
       {
         addStandardI18NData(o, o.key);
 
@@ -117,12 +117,12 @@ const readSingleTech = (
         {
           if(v.startsWith('@'))
           {
-            if(!localVars.hasOwnProperty(v) && !GLOBAL_VARS.hasOwnProperty(v))
-              return console.error('\nFailed to find variable reference [%s] in file: %s', v, path.relative(COMMON_DIR_PATH, techDataFilePath));
+            if(!Object.hasOwn(localVars, v) && !Object.hasOwn(GLOBAL_VARS, v))
+              return console.error('\nFailed to find variable reference [%s] in file: %s', v, path.relative(baseDir, techDataFilePath));
 
-            o[k] = localVars.hasOwnProperty(v) ? localVars[v] : GLOBAL_VARS[v];
+            o[k] = Object.hasOwn(localVars, v) ? localVars[v] : GLOBAL_VARS[v];
           }
-          else if(I18N_DATA.hasOwnProperty(v) && !['key'].includes(k))
+          else if(Object.hasOwn(I18N_DATA, v) && !['key'].includes(k))
           {
             o[k] = I18N_DATA[v];
           }
@@ -147,6 +147,6 @@ export async function readTech(opts: {basePath: string, outBasePath: string}, da
   const stellarisParser = peggy.generate(stellarisGrammarRaw);
   const files = glob(path.join(basePath, '**/*.txt'));
 
-  await Promise.allSettled((await files).map(readSingleTech({basePath, stellarisParser}, dataParam)));
+  await Promise.allSettled((await files).map(readSingleTech({basePath, stellarisParser, outBasePath}, dataParam)));
 
 }

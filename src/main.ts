@@ -3,6 +3,7 @@ import { readWeapons } from './weapons';
 import { exit } from 'process';
 import { readGlobalData } from './global-data';
 import { readTech } from './tech';
+import { resolve, join as pathjoin } from 'path'
 const program = new Command();
 
 program
@@ -27,7 +28,7 @@ if (program.processedArgs.length > 1) {
 }
 
 
-const OUT_DIR_PATH = path.join(__dirname, 'json');
+const OUT_DIR_PATH = pathjoin(__dirname, 'json');
 
 async function main() {
   const basePath = program.processedArgs[0];
@@ -38,11 +39,12 @@ async function main() {
   const GLOBAL_VARS = readGlobalData(basePath);
   console.debug(GLOBAL_VARS);
   const outBasePath = options.output || OUT_DIR_PATH
-  readTech({basePath, outBasePath}, {
+  await readTech({basePath, outBasePath}, {
     GLOBAL_VARS,
     WEAPON_DATA,
     I18N_DATA: {}
   })
+  console.log("output directory is", resolve(outBasePath))
 }
 
 main().then(()=>{
