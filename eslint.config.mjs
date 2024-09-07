@@ -1,10 +1,10 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
 
 
 export default [
-  {files: ["**/*.{js,mjs,cjs,ts}"]},
+  {files: ['**/*.{js,mjs,cjs,ts}']},
   {languageOptions: { globals: globals.node }},
   pluginJs.configs.recommended,
   {
@@ -15,7 +15,8 @@ export default [
       // we use 2 spaces to indent our code
       'indent': ['error', 2],
       // we want to avoid extraneous spaces
-      'no-multi-spaces': ['error']
+      'no-multi-spaces': ['error'],
+      'no-explicit-any': ['warning']
     }
   },
   ...tseslint.configs.recommended,
